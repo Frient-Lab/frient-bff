@@ -1,0 +1,39 @@
+import {MigrationInterface, QueryRunner, Table} from "typeorm";
+
+export class CreatePersonality1643589970694 implements MigrationInterface {
+
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.createTable(
+            new Table({
+                name: "personality",
+                columns: [
+                    {
+                        name: "id",
+                        type: "integer",
+                        isPrimary: true,
+                        isGenerated: true
+                    },
+                    {
+                        name: "description",
+                        type: "varchar",
+                        length: "50"
+                    },
+                    {
+                        name: "characteristics",
+                        type: "varchar",
+                        length: "500"
+                    },
+                    {
+                        name: "active",
+                        type: "boolean"
+                    },
+                ]
+            })
+        );
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.dropTable("personality");
+    }
+
+}

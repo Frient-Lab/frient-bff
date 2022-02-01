@@ -18,7 +18,7 @@ export class CreateQuiz1643596618349 implements MigrationInterface {
                         type: "integer"
                     },
                     {
-                        name: "idPersonality",
+                        name: "idAcronyms",
                         type: "integer"
                     },
                     {
@@ -39,10 +39,10 @@ export class CreateQuiz1643596618349 implements MigrationInterface {
                         referencedColumnNames: ["id"]
                     },
                     {
-                        name: "fk_quiz_personality",
-                        columnNames: ["idPersonality"],
-                        referencedTableName: "personality",
-                        referencedColumnNames: ["id"]
+                        name: "fk_quiz_acronym",
+                        columnNames: ["idAcronyms"],
+                        referencedTableName: "acronym",
+                        referencedColumnNames: ["idSumAcronyms"]
                     }
                 ]
             })

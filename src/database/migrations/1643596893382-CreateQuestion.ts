@@ -19,9 +19,21 @@ export class CreateQuestion1643596893382 implements MigrationInterface {
                         length: "300"
                     },
                     {
+                        name: "idPersonality",
+                        type: "integer"
+                    },
+                    {
                         name: "active",
                         type: "boolean"
                     },
+                ],
+                foreignKeys: [
+                    {
+                        name: "fk_quiz_personality",
+                        columnNames: ["idPersonality"],
+                        referencedTableName: "personality",
+                        referencedColumnNames: ["idPrimeNumber"]
+                    }
                 ]
             })
         );

@@ -1,6 +1,6 @@
 import { Entity, Column, CreateDateColumn, OneToOne, JoinColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Acronyms } from "./Acronyms";
 import { People } from "./People";
-import { Personality } from "./Personality";
 
 @Entity("quiz")
 export class Quiz {
@@ -11,7 +11,7 @@ export class Quiz {
   idPeople: number;
 
   @Column()
-  idPersonality: number;
+  idAcronyms: number;
 
   @Column()
   active: boolean;
@@ -23,7 +23,7 @@ export class Quiz {
   @JoinColumn({name: "idPeople"})
   people: People;
 
-  @OneToOne(() => Personality)
-  @JoinColumn({name: "idPersonality"})
-  personality: Personality;
+  @OneToOne(() => Acronyms)
+  @JoinColumn({name: "idAcronyms"})
+  personality: Acronyms;
 }

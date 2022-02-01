@@ -8,10 +8,9 @@ export class CreatePersonality1643589970694 implements MigrationInterface {
                 name: "personality",
                 columns: [
                     {
-                        name: "id",
+                        name: "idPrimeNumber",
                         type: "integer",
-                        isPrimary: true,
-                        isGenerated: true
+                        isPrimary: true
                     },
                     {
                         name: "description",

@@ -3,11 +3,11 @@ import { CreatePersonalityService } from "../../services/personalityService/Crea
 
 export class CreatePersonalityController {
   async handle(request: Request, response: Response) {
-    const {description, characteristics, active} = request.body;
+    const {idPrimeNumber, description, characteristics, active} = request.body;
 
     const service = new CreatePersonalityService();
 
-    const result = await service.execute({description, characteristics, active});
+    const result = await service.execute({idPrimeNumber, description, characteristics, active});
 
     if (result instanceof Error) {
       return response.status(400).json(result.message);

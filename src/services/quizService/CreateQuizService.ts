@@ -1,43 +1,62 @@
 import { Quiz } from "../../entities/Quiz";
 import { Answer } from "../../entities/Answer";
 import { Question } from "../../entities/Question";
-import { CreateQuizRepository } from "../../repositories/quizRepository/CreateQuizRepository";
+import { CreateQuizRepository } from "../../repositories/quizRepositories/CreateQuizRepository";
+import { getRepository } from "typeorm";
+import { Personality } from "../../entities/Personality";
+import { CreateAnswerRepository } from "../../repositories/answerRepositories/CreateAnswerRepository";
 
 export class CreateQuizService {
   execute = async (
     questions: Question[],
     answers: Answer[]
   ): Promise<Quiz | Error> => {
-    
-    const createRepository = new CreateQuizRepository();
+    const createQuizRepository = new CreateQuizRepository();
 
-    const idAcronyms = this.returnPersonality(questions, answers);
+    const createAnswerRepository = new CreateAnswerRepository();
+
+    createAnswerRepository.execute(answers);
+
+    const idAcronyms = await this.returnPersonality(questions, answers);
+    console.log(idAcronyms);
 
     const [{ idPeople }] = answers;
     const active = true;
 
-    const quiz = await createRepository.execute({ idPeople, idAcronyms, active });
+    const quiz = await createQuizRepository.execute({
+      idPeople,
+      idAcronyms,
+      active,
+    });
 
     return quiz;
   };
 
-  returnPersonality = (questions: Question[], answers: Answer[]): number => {
+  returnPersonality = async (
+    questions: Question[],
+    answers: Answer[]
+  ): Promise<number> => {
     let totalAcronymPersonalities = 0;
     let counter = 1;
     let personalityAcronym = 0;
     let totalAnswers = 0;
-    const mainPersonalities: number[] = [1, 3, 5, 7];
+
+    const repo = getRepository(Personality);
+    const personalities = await repo.find();
 
     for (let i = 0; i < questions.length; i++) {
-      if (mainPersonalities.includes(questions[i].idPersonality)) {
+      if (
+        personalities.find(
+          (item) => item.idPrimeNumber === questions[i].idPersonality
+        )
+      ) {
         totalAnswers += answers[i].answer;
         if (counter == 5) {
-          personalityAcronym = this.#returnAcronym(
+          personalityAcronym = await this.#returnAcronym(
             totalAnswers,
             questions[i].idPersonality,
             (counter * 100) / 2
           );
-
           totalAcronymPersonalities += personalityAcronym;
           totalAnswers = 0;
           personalityAcronym = 0;
@@ -49,22 +68,32 @@ export class CreateQuizService {
     return totalAcronymPersonalities;
   };
 
-  #returnAcronym = (
+  #returnAcronym = async (
     totalAnswers: number,
     personality: number,
     totalQuestions: number
-  ): number => {
-    const personalities: number[] = [1, 17, 3, 31, 5, 37, 7, 41];
+  ): Promise<number> => {
+    let primeNumber = 0;
+    const repo = getRepository(Personality);
+    const personalities = await repo.find();
 
-    for (let i = 0; i < personalities.length; i++) {
-      if (personalities[i] == personality) {
-        if (totalAnswers <= totalQuestions) {
-          return personalities[i];
+    personalities.forEach((element, index, array) => {
+      if (element.idPrimeNumber === personality) {
+        if (personality > 10) {
+          if (totalAnswers <= totalQuestions) {
+            primeNumber = array[index].idPrimeNumber;
+          } else {
+            primeNumber = array[index - 1].idPrimeNumber;
+          }
         } else {
-          return personalities[i + 1];
+          if (totalAnswers <= totalQuestions) {
+            primeNumber = array[index].idPrimeNumber;
+          } else {
+            primeNumber = array[index + 1].idPrimeNumber;
+          }
         }
       }
-    }
-    return 0;
+    });
+    return primeNumber;
   };
 }

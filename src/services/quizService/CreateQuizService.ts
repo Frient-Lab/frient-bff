@@ -8,7 +8,6 @@ import { CreateAnswerRepository } from "../../repositories/answerRepositories/Cr
 
 export class CreateQuizService {
   execute = async (
-    questions: Question[],
     answers: Answer[]
   ): Promise<Quiz | Error> => {
     const createQuizRepository = new CreateQuizRepository();
@@ -17,8 +16,7 @@ export class CreateQuizService {
 
     createAnswerRepository.execute(answers);
 
-    const idAcronyms = await this.returnPersonality(questions, answers);
-    console.log(idAcronyms);
+    const idAcronyms = await this.returnPersonality(answers);
 
     const [{ idPeople }] = answers;
     const active = true;
@@ -33,7 +31,6 @@ export class CreateQuizService {
   };
 
   returnPersonality = async (
-    questions: Question[],
     answers: Answer[]
   ): Promise<number> => {
     let totalAcronymPersonalities = 0;
@@ -41,8 +38,11 @@ export class CreateQuizService {
     let personalityAcronym = 0;
     let totalAnswers = 0;
 
-    const repo = getRepository(Personality);
-    const personalities = await repo.find();
+    const repoPersonality = getRepository(Personality);
+    const personalities = await repoPersonality.find();
+
+    const repoQuestion = getRepository(Question);
+    const questions = await repoQuestion.find();
 
     for (let i = 0; i < questions.length; i++) {
       if (

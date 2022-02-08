@@ -2,7 +2,7 @@ import { getRepository } from "typeorm";
 import { Personality } from "../../entities/Personality";
 
 export class GetAllPersonalityRepository {
-  execute = async () : Promise<Personality[] | Error> => {
+  execute = async () : Promise<Personality[]> => {
     
     const repo = getRepository(Personality);
 

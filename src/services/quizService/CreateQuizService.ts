@@ -5,6 +5,8 @@ import { CreateQuizRepository } from "../../repositories/quizRepositories/Create
 import { getRepository } from "typeorm";
 import { Personality } from "../../entities/Personality";
 import { CreateAnswerRepository } from "../../repositories/answerRepositories/CreateAnswerRepository";
+import { GetAllPersonalityRepository } from "../../repositories/personalityRepositories/GetAllPersonalityRepository";
+import { GetAllQuestionRepository } from "../../repositories/questionRepositories/GetAllQuestionRepository";
 
 export class CreateQuizService {
   execute = async (
@@ -38,11 +40,11 @@ export class CreateQuizService {
     let personalityAcronym = 0;
     let totalAnswers = 0;
 
-    const repoPersonality = getRepository(Personality);
-    const personalities = await repoPersonality.find();
+    const getAllRepository = new GetAllPersonalityRepository();
+    const personalities = await getAllRepository.execute();
 
-    const repoQuestion = getRepository(Question);
-    const questions = await repoQuestion.find();
+    const getAllQuestionRepository = new GetAllQuestionRepository();
+    const questions = await getAllQuestionRepository.execute();
 
     for (let i = 0; i < questions.length; i++) {
       if (

@@ -2,7 +2,7 @@ import { GetAllPersonalityRepository } from "../../repositories/personalityRepos
 import { Personality } from "../../entities/Personality";
 
 export class GetAllPersonalityService {
-  execute = async () : Promise<Personality[] | Error> => {
+  execute = async () : Promise<Personality[]> => {
     
     const getAllRepository = new GetAllPersonalityRepository();
 

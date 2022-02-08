@@ -2,7 +2,7 @@ import { Question } from "../../entities/Question";
 import { GetAllQuestionRepository } from "../../repositories/questionRepositories/GetAllQuestionRepository";
 
 export class GetAllQuestionService {
-  execute = async () : Promise<Question[] | Error> => {
+  execute = async () : Promise<Question[]> => {
     
     const getAllRepository = new GetAllQuestionRepository();
 

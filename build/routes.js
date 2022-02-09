@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.routes = void 0;
+const express_1 = require("express");
+const CreatePeopleController_1 = require("./controllers/peopleControllers/CreatePeopleController");
+const CreatePersonalityController_1 = require("./controllers/personalityControllers/CreatePersonalityController");
+const GetAllPersonalityController_1 = require("./controllers/personalityControllers/GetAllPersonalityController");
+const GetAllQuestionController_1 = require("./controllers/questionControllers/GetAllQuestionController");
+const CreateQuizController_1 = require("./controllers/quizControllers/CreateQuizController");
+const GetQuizController_1 = require("./controllers/quizControllers/GetQuizController");
+const routes = (0, express_1.Router)();
+exports.routes = routes;
+routes.post("/quiz", new CreateQuizController_1.CreateQuizController().handle);
+routes.post("/people", new CreatePeopleController_1.CreatePeopleController().handle);
+routes.post("/personality", new CreatePersonalityController_1.CreatePersonalityController().handle);
+routes.get("/quiz/:id", new GetQuizController_1.GetQuizController().handle);
+routes.get("/personality", new GetAllPersonalityController_1.GetAllPersonalityController().handle);
+routes.get("/question", new GetAllQuestionController_1.GetAllQuestionController().handle);

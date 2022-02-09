@@ -1,6 +1,6 @@
 import {MigrationInterface, QueryRunner, Table} from "typeorm";
 
-export class CreateAcronyms1643681909341 implements MigrationInterface {
+export class CreateAcronyms1644369463002 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.createTable(
@@ -47,4 +47,5 @@ export class CreateAcronyms1643681909341 implements MigrationInterface {
     }
 
 }
+
 

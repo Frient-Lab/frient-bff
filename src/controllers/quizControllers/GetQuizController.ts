@@ -6,7 +6,9 @@ export class GetQuizController {
     const {id} = request.params;
     const service = new GetQuizService();
 
-    const quiz = await service.execute({id});
+    const idNumber = parseInt(id);
+
+    const quiz = await service.execute(idNumber);
 
     return response.json(quiz);
   }

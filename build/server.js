@@ -22,4 +22,4 @@ app.use((0, cors_1.default)());
 // });
 app.use(express_1.default.json());
 app.use(routes_1.routes);
-app.listen(4000, () => console.log("Server is running"));
+app.listen(process.env.PORT || 4000, () => console.log("Server is running"));

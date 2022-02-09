@@ -25,4 +25,4 @@ app.use(express.json());
 
 app.use(routes);
 
-app.listen(4000, () => console.log("Server is running"));
+app.listen(process.env.PORT || 4000, () => console.log("Server is running"));
